@@ -35,20 +35,9 @@ app.use(
 );
 
 // ─── 2. CORS ──────────────────────────────────────────────────────────────
-const allowedOrigins = [
-  env.CLIENT_URL,
-  'http://localhost:3000',
-  'http://127.0.0.1:3000',
-].filter(Boolean);
-
 app.use(
   cors({
-    origin(origin, callback) {
-  // Allow requests with no origin (health checks, Railway, Postman)
-  if (!origin) return callback(null, true);
-  if (allowedOrigins.includes(origin)) return callback(null, true);
-  callback(new Error(`CORS: origin ${origin} not allowed.`));
-    },
+    origin: true,
     credentials    : true,
     methods        : ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders : ['Content-Type', 'Authorization'],
