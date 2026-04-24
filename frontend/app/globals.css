@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *   { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    @apply bg-surface text-on-surface font-inter antialiased;
+    -webkit-font-smoothing : antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-manrope font-extrabold tracking-tight;
+  }
+}
+
+@layer components {
+  /* Material Symbols icon sizing helper */
+  .icon-sm  { font-size: 18px; }
+  .icon-md  { font-size: 24px; }
+  .icon-lg  { font-size: 32px; }
+
+  /* Glass nav blur */
+  .glass-nav {
+    @apply bg-white/80 backdrop-blur-xl border-b border-outline-variant/20;
+  }
+
+  /* Sidebar active link */
+  .nav-active {
+    @apply bg-white text-primary shadow-sm font-semibold;
+  }
+
+  /* Status badges */
+  .badge-pending   { @apply bg-tertiary-container/30 text-tertiary border border-tertiary/20; }
+  .badge-confirmed { @apply bg-secondary-container/40 text-secondary border border-secondary/20; }
+  .badge-rejected  { @apply bg-error-container text-error border border-error/20; }
+  .badge-completed { @apply bg-surface-container-high text-outline border border-outline-variant; }
+
+  /* Soft card */
+  .card {
+    @apply bg-surface-container-lowest rounded-4xl shadow-cloud border border-outline-variant/10;
+  }
+
+  /* Clinical input */
+  .input-field {
+    @apply w-full bg-surface-container-high rounded-xl px-4 py-3 text-on-surface
+           placeholder:text-outline border-2 border-transparent
+           focus:outline-none focus:border-primary/30 focus:bg-surface-container-lowest
+           transition-all duration-200;
+  }
+}
+
+@layer utilities {
+  .font-manrope { font-family: 'Manrope', sans-serif; }
+  .font-inter   { font-family: 'Inter',   sans-serif; }
+  .tracking-widest-plus { letter-spacing: 0.1em; }
+}
