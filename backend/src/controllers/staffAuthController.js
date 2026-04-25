@@ -28,7 +28,7 @@ const signToken = (userId, role) =>
 const staffLogin = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
-  const user = await User.scope('withPassword').findOne({ where: { email } });
+  const user = await User.unscoped().findOne({ where: { email } });
 
   const invalid = 'Incorrect email or password.';
   if (!user) throw new UnauthorizedError(invalid);
