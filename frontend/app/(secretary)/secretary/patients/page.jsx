@@ -88,7 +88,7 @@ export default function SecretaryPatientsPage() {
     setLoading(true);
     try {
       // جيب كل الحجوزات بحد أقصى 500
-      const { data } = await api.get('/appointments?limit=500');
+      const { data } = await api.get('/appointments?limit=100');
       const appts = data.data ?? [];
 
       // Group by patient
