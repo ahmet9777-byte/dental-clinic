@@ -29,8 +29,10 @@ export default function SecretaryLayout({ children }) {
   return (
     <div className="min-h-screen bg-surface flex">
       <Sidebar navItems={SECRETARY_NAV} role="secretary" />
-      <main className="ml-64 flex-1 p-8 lg:p-12 min-h-screen max-w-[calc(100vw-16rem)]">
-        {children}
+      <main className="flex-1 lg:ml-64 pt-16 pb-20 lg:pt-0 lg:pb-0 min-h-screen">
+        <div className="p-4 sm:p-6 lg:p-10 max-w-7xl mx-auto">
+          {children}
+        </div>
       </main>
     </div>
   );
