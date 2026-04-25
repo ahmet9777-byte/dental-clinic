@@ -46,8 +46,9 @@ export function AuthProvider({ children }) {
 
   // On mount: restore session from localStorage
   useEffect(() => {
-    const token = localStorage.getItem('dc_token');
-    const user  = localStorage.getItem('dc_user');
+    if (typeof window === 'undefined') return;
+    const token = window.localStorage.getItem('dc_token');
+    const user  = window.localStorage.getItem('dc_user');
     if (token && user) {
       try {
         const parsed = JSON.parse(user);
@@ -65,8 +66,14 @@ export function AuthProvider({ children }) {
 
   // ── Save token to axios headers + localStorage whenever it changes ──────
   const persistAuth = useCallback((token, user) => {
-    localStorage.setItem('dc_token', token);
-    localStorage.setItem('dc_user', JSON.stringify(user));
+    try {
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem('dc_token', token);
+        window.localStorage.setItem('dc_user', JSON.stringify(user));
+      }
+    } catch (e) {
+      console.error('localStorage error:', e);
+    }
     api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     dispatch({ type: 'AUTH_SUCCESS', user, token });
   }, []);
