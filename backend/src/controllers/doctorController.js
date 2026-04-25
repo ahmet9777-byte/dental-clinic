@@ -123,14 +123,15 @@ const getDoctorSchedule = asyncHandler(async (req, res) => {
 
   if (date) {
     where.appointmentDate = date;
-  } else {
-    // Default: today and forward
+  }
+  // إذا لم يكن هناك فلتر تاريخ ولا status=all، أظهر من اليوم فصاعداً
+  else if (status !== 'all') {
     where.appointmentDate = { [Op.gte]: new Date().toISOString().split('T')[0] };
   }
 
-  if (status) {
+  if (status && status !== 'all') {
     where.status = status;
-  } else {
+  } else if (!status) {
     where.status = { [Op.in]: ['confirmed', 'pending', 'completed'] };
   }
 

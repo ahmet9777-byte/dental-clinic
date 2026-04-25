@@ -110,31 +110,30 @@ export default function DoctorPatientsPage() {
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      const { data } = await api.get('/doctor/patients');
+      // جيب كل المواعيد بدون فلتر تاريخ
+      const { data } = await api.get('/doctor/schedule?status=all');
+      const appts = data.data ?? [];
+
       // Group by patient
       const map = {};
-      for (const item of data.data ?? []) {
-        const pid = item.patient?.id;
+      for (const appt of appts) {
+        const pid = appt.patient?.id;
         if (!pid) continue;
-        if (!map[pid]) map[pid] = { patient: item.patient, appointments: [] };
-        map[pid].appointments.push(item);
+        if (!map[pid]) map[pid] = { patient: appt.patient, appointments: [] };
+        map[pid].appointments.push(appt);
       }
-      setPatients(Object.values(map));
+
+      // Sort each patient's appointments by date desc
+      const list = Object.values(map).map(entry => ({
+        ...entry,
+        appointments: entry.appointments.sort((a, b) =>
+          new Date(b.appointmentDate) - new Date(a.appointmentDate)
+        ),
+      }));
+
+      setPatients(list);
     } catch (e) {
-      // fallback: get from schedule
-      try {
-        const { data } = await api.get('/doctor/schedule');
-        const map = {};
-        for (const appt of data.data ?? []) {
-          const pid = appt.patient?.id;
-          if (!pid) continue;
-          if (!map[pid]) map[pid] = { patient: appt.patient, appointments: [] };
-          map[pid].appointments.push(appt);
-        }
-        setPatients(Object.values(map));
-      } catch (e2) {
-        console.error(e2);
-      }
+      console.error(e);
     } finally {
       setLoading(false);
     }
