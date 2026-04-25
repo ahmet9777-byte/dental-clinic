@@ -87,9 +87,15 @@ export default function SecretaryPatientsPage() {
   const load = useCallback(async () => {
     setLoading(true);
     try {
-      // جيب كل الحجوزات ثم صنّفها حسب المريض
-      const { data } = await api.get('/appointments?limit=200');
-      const appts = data.data ?? [];
+      // جيب كل الحجوزات بكل الحالات
+      const responses = await Promise.all([
+        api.get('/appointments?limit=200&status=pending'),
+        api.get('/appointments?limit=200&status=confirmed'),
+        api.get('/appointments?limit=200&status=completed'),
+        api.get('/appointments?limit=200&status=rejected'),
+      ]);
+
+      const appts = responses.flatMap(r => r.data.data ?? []);
 
       // Group by patient
       const map = {};
@@ -99,7 +105,9 @@ export default function SecretaryPatientsPage() {
         if (!map[pid]) {
           map[pid] = { patient: appt.patient, appointments: [] };
         }
-        map[pid].appointments.push(appt);
+        // تجنب التكرار
+        const exists = map[pid].appointments.some(a => a.id === appt.id);
+        if (!exists) map[pid].appointments.push(appt);
       }
 
       // Sort each patient's appointments by date desc
