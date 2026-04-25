@@ -43,7 +43,7 @@ export const SECRETARY_NAV = [
 ];
 
 export const DOCTOR_NAV = [
-  { label: 'My Schedule',   href: '/doctor/schedule',  icon: 'calendar_today'   },
-  { label: 'My Patients',   href: '/doctor/patients',  icon: 'group'            },
-  { label: 'Appointments',  href: '/doctor/appointments', icon: 'event_note'    },
+  { label: 'My Schedule',   href: '/doctor/schedule',      icon: 'calendar_today'   },
+  { label: 'My Patients',   href: '/doctor/patients',      icon: 'group'            },
+  { label: 'Appointments',  href: '/doctor/appointments',  icon: 'event_note'       },
 ];
