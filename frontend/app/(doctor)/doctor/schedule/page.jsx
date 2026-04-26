@@ -175,21 +175,25 @@ export default function DoctorSchedulePage() {
           </p>
         </div>
 
-        {/* Date selector strip */}
-        <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
+        {/* Date selector strip - scrollable */}
+        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           {weekDates.map(iso => {
             const { day, num } = dateLabel(iso);
             const isToday  = iso === todayISO;
             const isActive = iso === selectedDate;
             return (
               <button key={iso} onClick={() => setSelectedDate(iso)}
-                className={clsx('flex flex-col items-center gap-0.5 px-3 py-2.5 rounded-2xl transition-all duration-200 min-w-[52px] flex-shrink-0',
+                className={clsx(
+                  'flex flex-col items-center gap-1 rounded-2xl transition-all duration-200 flex-shrink-0',
+                  'min-w-[56px] py-3 px-2',
                   isActive ? 'bg-primary text-white shadow-lg'
                   : isToday ? 'bg-primary/10 text-primary'
-                  : 'bg-surface-container-low text-on-surface-variant hover:bg-surface-container')}>
+                  : 'bg-surface-container-low text-on-surface-variant hover:bg-surface-container'
+                )}>
                 <span className="text-[10px] font-bold uppercase tracking-wider">{day}</span>
-                <span className="text-xl font-black">{num}</span>
-                {isToday && !isActive && <span className="w-1 h-1 rounded-full bg-primary" />}
+                <span className="text-2xl font-black leading-none">{num}</span>
+                {isToday && !isActive && <span className="w-1.5 h-1.5 rounded-full bg-primary mt-0.5" />}
               </button>
             );
           })}
