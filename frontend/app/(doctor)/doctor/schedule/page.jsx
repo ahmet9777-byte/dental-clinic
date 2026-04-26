@@ -175,9 +175,9 @@ export default function DoctorSchedulePage() {
           </p>
         </div>
 
-        {/* Date selector strip - scrollable */}
-        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide"
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+        {/* Date selector strip */}
+        <div className="flex gap-2 overflow-x-auto pb-1"
+          style={{ scrollbarWidth: 'none' }}>
           {weekDates.map(iso => {
             const { day, num } = dateLabel(iso);
             const isToday  = iso === todayISO;
@@ -185,32 +185,35 @@ export default function DoctorSchedulePage() {
             return (
               <button key={iso} onClick={() => setSelectedDate(iso)}
                 className={clsx(
-                  'flex flex-col items-center gap-1 rounded-2xl transition-all duration-200 flex-shrink-0',
-                  'min-w-[56px] py-3 px-2',
-                  isActive ? 'bg-primary text-white shadow-lg'
-                  : isToday ? 'bg-primary/10 text-primary'
-                  : 'bg-surface-container-low text-on-surface-variant hover:bg-surface-container'
+                  'flex flex-col items-center gap-0.5 rounded-2xl transition-all duration-200 flex-shrink-0 w-14 py-2.5',
+                  isActive
+                    ? 'bg-primary text-white shadow-lg'
+                    : isToday
+                    ? 'bg-primary/10 text-primary'
+                    : 'bg-surface-container-low text-on-surface-variant hover:bg-surface-container'
                 )}>
                 <span className="text-[10px] font-bold uppercase tracking-wider">{day}</span>
-                <span className="text-2xl font-black leading-none">{num}</span>
-                {isToday && !isActive && <span className="w-1.5 h-1.5 rounded-full bg-primary mt-0.5" />}
+                <span className="text-2xl font-black leading-tight">{num}</span>
+                {isToday && !isActive && <span className="w-1.5 h-1.5 rounded-full bg-primary" />}
               </button>
             );
           })}
         </div>
 
-        {/* Stats — 2x2 grid like My Appointments */}
-        <div className="grid grid-cols-2 gap-3">
+        {/* Stats — same as My Appointments */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {[
             { icon: 'event_note',      color: 'text-primary',   label: 'Total',     value: stats.total     },
             { icon: 'check_circle',    color: 'text-secondary', label: 'Confirmed', value: stats.confirmed },
             { icon: 'pending_actions', color: 'text-tertiary',  label: 'Pending',   value: stats.pending   },
             { icon: 'task_alt',        color: 'text-outline',   label: 'Completed', value: stats.completed },
           ].map(s => (
-            <div key={s.label} className="card p-5 flex flex-col gap-3">
+            <div key={s.label} className="card p-5 flex items-center gap-3">
               <span className={`material-symbols-outlined text-2xl ${s.color}`}>{s.icon}</span>
-              <p className="text-4xl font-black text-on-surface tracking-tighter">{s.value}</p>
-              <p className="text-label-sm text-outline uppercase tracking-widest">{s.label}</p>
+              <div>
+                <p className="text-label-sm text-outline uppercase tracking-wider">{s.label}</p>
+                <p className="text-2xl font-black text-on-surface">{s.value}</p>
+              </div>
             </div>
           ))}
         </div>
