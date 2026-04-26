@@ -195,18 +195,18 @@ export default function DoctorSchedulePage() {
           })}
         </div>
 
-        {/* Stats row — horizontal on mobile */}
-        <div className="grid grid-cols-4 gap-2">
+        {/* Stats — 2x2 grid like My Appointments */}
+        <div className="grid grid-cols-2 gap-3">
           {[
             { icon: 'event_note',      color: 'text-primary',   label: 'Total',     value: stats.total     },
             { icon: 'check_circle',    color: 'text-secondary', label: 'Confirmed', value: stats.confirmed },
             { icon: 'pending_actions', color: 'text-tertiary',  label: 'Pending',   value: stats.pending   },
-            { icon: 'task_alt',        color: 'text-outline',   label: 'Done',      value: stats.completed },
+            { icon: 'task_alt',        color: 'text-outline',   label: 'Completed', value: stats.completed },
           ].map(s => (
-            <div key={s.label} className="card p-3 flex flex-col items-center gap-1 text-center">
-              <span className={`material-symbols-outlined text-xl ${s.color}`}>{s.icon}</span>
-              <p className="text-xl font-black text-on-surface">{s.value}</p>
-              <p className="text-[10px] font-bold text-outline uppercase tracking-wider">{s.label}</p>
+            <div key={s.label} className="card p-5 flex flex-col gap-3">
+              <span className={`material-symbols-outlined text-2xl ${s.color}`}>{s.icon}</span>
+              <p className="text-4xl font-black text-on-surface tracking-tighter">{s.value}</p>
+              <p className="text-label-sm text-outline uppercase tracking-widest">{s.label}</p>
             </div>
           ))}
         </div>
