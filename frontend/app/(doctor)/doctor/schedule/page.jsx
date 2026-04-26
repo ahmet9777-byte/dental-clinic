@@ -199,16 +199,16 @@ export default function DoctorSchedulePage() {
           })}
         </div>
 
-        {/* Stats — compact like My Appointments */}
-        <div className="grid grid-cols-2 gap-3">
+        {/* Stats — 2 cols mobile, 4 cols desktop */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {[
             { icon: 'event_note',      color: 'text-primary',   label: 'Total',     value: stats.total     },
             { icon: 'check_circle',    color: 'text-secondary', label: 'Confirmed', value: stats.confirmed },
             { icon: 'pending_actions', color: 'text-tertiary',  label: 'Pending',   value: stats.pending   },
             { icon: 'task_alt',        color: 'text-outline',   label: 'Completed', value: stats.completed },
           ].map(s => (
-            <div key={s.label} className="card p-4 flex items-center gap-3">
-              <span className={`material-symbols-outlined text-xl ${s.color}`}>{s.icon}</span>
+            <div key={s.label} className="card p-5 flex items-center gap-3">
+              <span className={`material-symbols-outlined text-2xl ${s.color}`}>{s.icon}</span>
               <div>
                 <p className="text-label-sm text-outline uppercase tracking-wider">{s.label}</p>
                 <p className="text-2xl font-black text-on-surface">{s.value}</p>
